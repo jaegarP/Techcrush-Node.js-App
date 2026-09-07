@@ -5,7 +5,7 @@ import sys
 
 def is_valid_email(email):
     """
-    Validates an email address according to RFC 5322 standards (simplified).
+    Validates an e-mail address according to RFC 5322 standards (simplified).
     
     Args:
         email: String to validate as email address
