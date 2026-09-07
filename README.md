@@ -1,6 +1,6 @@
 # Techcrush Node.js-App
 
-Express.js app containerized with Docker and published to Docker Hub.
+A Node.js app containerized with Docker and published to Docker Hub.
 
 ## Run locally
 npm install && npm start
