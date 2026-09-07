@@ -3,10 +3,8 @@ import sys
 from abacusai import ApiClient
 
 def main():
-    # 1. Retrieve the environment keys passed by the GitHub Runner
+    # 1. Fetch your API token from your repository secrets
     api_key = os.environ.get("LLM_API_KEY")
-    project_id = os.environ.get("LLM_PROJECT_ID") # Required if using a specialized project deployment
-    
     if not api_key:
         print("Error: LLM_API_KEY is not set.")
         sys.exit(1)
@@ -19,25 +17,25 @@ def main():
         "Return ONLY the executable code block. Do not include markdown code ticks (```)."
     )
 
-    print("Sending prompt to Abacus AI ChatLLM...")
+    print("Sending prompt to Abacus AI...")
     
     try:
-        # Call the general text/prompt evaluation function or the direct execution endpoint
-        # If your agent is mapped to a specific deployment, use client.evaluate_prompt or deployment endpoints
+        # 3. Call evaluate_prompt with the exact schema supported by the SDK
+        # We explicitly omit project_id here to prevent parameter mismatch errors
         response = client.evaluate_prompt(
             prompt=prompt,
             system_message="You are an automated code-writing agent. Output valid python code directly.",
-            project_id=project_id if project_id else None
+            llm_name="CLAUDE_3_5_SONNET" # Supported formats: "CLAUDE_3_5_SONNET", "GEMINI_2_FLASH", "GPT_4O"
         )
         
-        # Pull the generated response string
+        # Extract the pure code text block
         generated_code = response.content.strip()
 
     except Exception as e:
         print(f"Failed to communicate with Abacus AI API: {str(e)}")
         sys.exit(1)
 
-    # 3. Write the response payload into a file inside the repository path
+    # 4. Write the file straight into your GitHub repository workspace
     output_filename = "validation.py"
     with open(output_filename, "w") as f:
         f.write(generated_code)
