@@ -26,7 +26,7 @@ def main():
         # If your agent is mapped to a specific deployment, use client.evaluate_prompt or deployment endpoints
         response = client.evaluate_prompt(
             prompt=prompt,
-            system_instruction="You are an automated code-writing agent. Output valid python code directly.",
+            system_message="You are an automated code-writing agent. Output valid python code directly.",
             project_id=project_id if project_id else None
         )
         
