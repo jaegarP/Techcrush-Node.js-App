@@ -24,6 +24,8 @@ jobs:
         env:
           # Securely map your Abacus API key from your repository secrets
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          # If your deployment targets a specific project, provide its ID here
+          LLM_PROJECT_ID: ${{ secrets.LLM_PROJECT_ID }}
         run: python .github/scripts/generate.py
 
       - name: Commit and Push Changes
